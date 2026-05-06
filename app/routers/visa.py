@@ -1,18 +1,16 @@
-from fastapi import APIRouter, Depends
-from sqlalchemy.orm import Session
-from app.database import get_db
-from app.models import TarjetaVisa
+from fastapi import APIRouter
 
 router = APIRouter()
 
-@router.post("/verificar-tarjeta")
-def verificar_tarjeta(numero_tarjeta: str, cvv: str, db: Session = Depends(get_db)):
-    tarjeta = db.query(TarjetaVisa).filter(
-        TarjetaVisa.numero_tarjeta == numero_tarjeta,
-        TarjetaVisa.cvv == cvv
-    ).first()
+TARJETAS_VISA = [
+    {"numero_tarjeta": "4111111111111111", "cvv": "123"},
+    {"numero_tarjeta": "4222222222222222", "cvv": "456"},
+]
 
-    if tarjeta:
-        return {"existe": True, "mensaje": "Tarjeta verificada correctamente"}
+@router.post("/verificar-tarjeta")
+def verificar_tarjeta(numero_tarjeta: str, cvv: str):
+    for tarjeta in TARJETAS_VISA:
+        if tarjeta["numero_tarjeta"] == numero_tarjeta and tarjeta["cvv"] == cvv:
+            return {"existe": True, "mensaje": "Tarjeta verificada correctamente"}
     
     return {"existe": False, "mensaje": "Tarjeta no encontrada"}
