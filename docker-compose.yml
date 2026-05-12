@@ -1,0 +1,24 @@
+services:
+  visa-service:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://visa_user:visa123@visa-db:5432/visa_db
+    depends_on:
+      visa-db:
+        condition: service_healthy
+
+  visa-db:
+    image: postgres
+    environment:
+      - POSTGRES_USER=visa_user
+      - POSTGRES_PASSWORD=visa123
+      - POSTGRES_DB=visa_db
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U visa_user -d visa_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
