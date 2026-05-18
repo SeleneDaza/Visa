@@ -1,16 +1,4 @@
 services:
-  visa-service:
-    build: .
-    ports:
-      - "8000:8000"
-    environment:
-      - DATABASE_URL=postgresql://visa_user:visa123@visa-db:5432/visa_db
-    depends_on:
-      visa-db:
-        condition: service_healthy
-    labels:
-      - "logging=promtail"
-
   visa-db:
     image: postgres
     environment:
