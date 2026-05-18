@@ -8,6 +8,8 @@ services:
     depends_on:
       visa-db:
         condition: service_healthy
+    labels:
+      - "logging=promtail"
 
   visa-db:
     image: postgres
