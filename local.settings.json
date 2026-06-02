@@ -3,6 +3,6 @@
   "Values": {
     "AzureWebJobsStorage": "",
     "FUNCTIONS_WORKER_RUNTIME": "python",
-    "DATABASE_URL": "postgresql://visa_user:visa123@localhost:5432/visa_db"
+    "DATABASE_URL": "postgresql://postgres:12345678@localhost:5432/visa_db"
   }
 }
